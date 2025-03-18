@@ -6,7 +6,7 @@ const logger = require("./logger");
 const app = express();
 app.use(express.json());
 
-// Load email credentials from .env
+
 const emailAccounts = JSON.parse(process.env.EMAILS);
 const passwords = JSON.parse(process.env.PASSWORDS);
 const maxEmailsPerAccount = 500;
@@ -14,13 +14,13 @@ const maxEmailsPerAccount = 500;
 let currentAccountIndex = 0;
 let emailsSentFromCurrent = 0;
 
-// Function to get the next available email account
+
 const getNextAccount = () => {
     currentAccountIndex = (currentAccountIndex + 1) % emailAccounts.length;
     emailsSentFromCurrent = 0;
 };
 
-// Function to create a mail transporter
+
 const createTransporter = (email, password) => {
     return nodemailer.createTransport({
         service: "gmail",
@@ -31,7 +31,7 @@ const createTransporter = (email, password) => {
     });
 };
 
-// API Endpoint to send bulk emails
+
 app.post("/send-emails", async (req, res) => {
     const { recipients, subject, content } = req.body;
 
